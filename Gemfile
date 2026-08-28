@@ -63,4 +63,4 @@ group :test do
 
 end
 
-gem 'concurrent-ruby', '1.3.4'
+gem 'concurrent-ruby', '1.3.8'

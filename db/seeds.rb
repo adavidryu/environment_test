@@ -25,6 +25,8 @@ titles = case Rails.env
 					 ]
 				 end
 
+		Book.delete_all
+
 titles.each do |title|
 	Book.find_or_create_by!(title: title)
 end

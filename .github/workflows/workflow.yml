@@ -1,0 +1,78 @@
+name: Rails tests
+
+on:
+  push:
+    branches: [run_test, test, main]
+  pull_request:
+    branches: [run_test, test, main]
+
+env:
+  RUBY_VERSION: "3.4.5"
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: password
+  DATABASE_USER: postgres
+  DATABASE_PASSWORD: password
+
+jobs:
+  rspec-test:
+    name: RSpec, security, and style
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y libpq-dev
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Yarn dependencies
+        run: yarn install --no-lockfile
+      - name: Prepare test database
+        env:
+          RAILS_ENV: test
+          DATABASE_USER: postgres
+          DATABASE_PASSWORD: password
+        run: bundle exec rails db:create db:migrate db:seed
+      - name: Run RSpec
+        env:
+          RAILS_ENV: test
+          DATABASE_USER: postgres
+          DATABASE_PASSWORD: password
+        run: bundle exec rspec spec
+      - name: Run Rails tests
+        env:
+          RAILS_ENV: test
+          DATABASE_USER: postgres
+          DATABASE_PASSWORD: password
+        run: bundle exec rails test
+      - name: Run Brakeman
+        run: bundle exec brakeman --no-pager -o brakeman.txt
+      - name: Run RuboCop
+        run: bundle exec rubocop --force-exclusion vendor/*/** --out rubocop.txt
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-reports
+          path: |
+            coverage
+            brakeman.txt
+            rubocop.txt
+          if-no-files-found: ignore

@@ -3,7 +3,7 @@ source "https://rubygems.org"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.3"
 # Rails 8.0 expects the JSON 2.x API used by its cookie serializer.
-gem "json", "~> 2.11"
+gem "json", "~> 3.0"
 gem "yaml_db"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"

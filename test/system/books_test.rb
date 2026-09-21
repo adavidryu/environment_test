@@ -3,6 +3,7 @@ require "application_system_test_case"
 class BooksTest < ApplicationSystemTestCase
   setup do
     @book = books(:one)
+    login_as admins(:one), scope: :admin
   end
 
   test "visiting the index" do

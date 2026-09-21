@@ -21,7 +21,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 
 # Authenticate administrators through Google OAuth.
-gem "devise", "~> 4.9"
+gem "devise", "~> 5.0"
 gem "omniauth", "~> 2.1"
 gem "omniauth-google-oauth2", "~> 1.1"
 gem "omniauth-rails_csrf_protection", "~> 1.0"

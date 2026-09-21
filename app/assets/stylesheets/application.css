@@ -8,3 +8,27 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+.flash--notice {
+  color: green;
+}
+
+.flash--alert,
+.flash--error,
+.flash--signed-out {
+  color: red;
+}
+
+.oauth-link-form {
+  display: inline;
+}
+
+.oauth-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #555;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+}

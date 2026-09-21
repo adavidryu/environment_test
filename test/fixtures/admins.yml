@@ -1,0 +1,5 @@
+one:
+  email: admin@example.com
+  full_name: Admin User
+  uid: google-admin-123
+  avatar_url: https://example.com/avatar.jpg

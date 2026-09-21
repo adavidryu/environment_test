@@ -1,6 +1,7 @@
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)
 require "rspec/rails"
+require "omniauth"
 require_relative "spec_helper"
 
 abort("The Rails environment is running in production mode!") if Rails.env.production?

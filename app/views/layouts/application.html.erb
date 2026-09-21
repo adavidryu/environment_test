@@ -23,6 +23,10 @@
   </head>
 
   <body>
+    <% flash.each do |type, message| %>
+      <% flash_type = message == I18n.t("devise.sessions.signed_out") ? "signed-out" : type %>
+      <p class="flash flash--<%= flash_type %>"><%= message %></p>
+    <% end %>
     <%= yield %>
   </body>
 </html>
